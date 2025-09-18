@@ -75,8 +75,17 @@ html.dark {
 }
 
 .body-class {
-  --el-color-primary: #597ef7;
+  --el-color-primary: #6a2623;
+  --el-color-primary-dark-2: #551e1c;
+  --el-color-primary-light-3: #976765;
+  --el-color-primary-light-5: #b59391;
+  --el-color-primary-light-7: #d2bebd;
+  --el-color-primary-light-8: #e1d4d3;
+  --el-color-primary-light-9: #f0e9e9;
   --kk-money-color: #ffaf13;
+  --kk-modal-bg-color: #59090a;
+
+  background: url('@/assets/images/new/main-bg.jpg') center bottom / cover no-repeat fixed rgb(242, 246, 247);
 }
 
 .el-dialog {
@@ -93,11 +102,9 @@ html.dark {
 }
 .el-dialog .el-dialog__body {
   box-sizing: border-box;
-  margin: 0 8px 8px;
+  margin: 0;
   border-radius: 10px;
   padding: 20px;
-  background: var(--cp-color67);
-  color: var(--cp-color251);
 }
 .single-text {
   white-space: nowrap;

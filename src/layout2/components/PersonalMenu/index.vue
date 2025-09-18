@@ -107,7 +107,6 @@ const refreshLoading = ref(false);
 const onLogout = () => {
   userStore.logout().then(() => {
     userStore.resetToken();
-    router.replace({ path: "/" });
   });
 };
 

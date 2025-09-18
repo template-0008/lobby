@@ -13,6 +13,8 @@ const props = defineProps({
   },
 })
 
+console.log('item-----', props.item)
+
 const emit = defineEmits<{
   onClick: [data: any]
 }>()

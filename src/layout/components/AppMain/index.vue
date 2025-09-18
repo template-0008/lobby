@@ -1,6 +1,7 @@
 <template>
-  <section class="app-main flex-1">
-    <div class="mx-auto my-0">
+  <section class="h-full">
+    <Sidebar />
+    <div class="py-8 pl-220px pr-8 min-h-full">
       <router-view>
         <template #default="{ Component, route }">
           <transition name="fade-page" mode="out-in">
@@ -13,16 +14,15 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserStore } from "@/store";
+
+const userStore = useUserStore();
+
+const isLogin = computed(() => userStore.userInfo?.userID !== '');
+</script>
 
 <style lang="scss" scoped>
-.app-main {
-  position: relative;
-  height: calc(100% - $navbar-height);
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: #f3faff;
-}
 /* fade-transform */
 .fade-page-leave-active,
 .fade-page-enter-active {

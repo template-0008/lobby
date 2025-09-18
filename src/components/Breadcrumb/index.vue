@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import { RouteLocationMatched } from "vue-router";
 import { compile } from "path-to-regexp";
-import router from "@/router";
 import { translateRouteTitle } from "@/utils/i18n";
 
 const currentRoute = useRoute();
@@ -31,6 +30,7 @@ const pathCompile = (path: string) => {
   const toPath = compile(path);
   return toPath(params);
 };
+const router = useRouter();
 
 const breadcrumbs = ref<Array<RouteLocationMatched>>([]);
 

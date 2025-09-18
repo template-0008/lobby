@@ -11,7 +11,6 @@ eventEmitter.on(TOKEN_AUTH_FAIL, (data: any) => {
   // showMessage(data);
   const userStore = useUserStoreHook();
   userStore.resetToken();
-  userStore.showLogin = true;
 });
 
 // http error

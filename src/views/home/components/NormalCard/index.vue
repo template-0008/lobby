@@ -14,9 +14,6 @@ const emit = defineEmits<{
   onClick: [data: any]
 }>()
 
-const menuRowRef = ref<any>(null)
-// const topVal = ref(0);
-
 onMounted(() => {
 
 })
@@ -25,10 +22,24 @@ function onClickGame(game: any) {
   emit('onClick', game)
 }
 
+function getLotteryImage(info: Record<string, any>) {
+  const { lottoClassifyCountry, lottoClassify, lottoID } = info || {}
+  const countryCode = lottoClassifyCountry ? lottoClassifyCountry.toLowerCase() : ''
+  const lottoClassifyImg = localImg(`custom-images/lottery/${countryCode}-${lottoClassify}.png`)
+  if (lottoID) {
+    const lotteryImg = localImg(`custom-images/lottery-games/${countryCode}-${lottoClassify}-${lottoID}.png`)
+    return lotteryImg.includes('undefined') ? lottoClassifyImg : lotteryImg
+  } else {
+    return lottoClassifyImg
+  }
+}
+
 function getImage(info: Record<string, any>) {
-  console.log(info)
-  const type = info.lobbyCode ? info.lobbyCode.toLowerCase() : ''
-  return localImg(`custom-images/${type}/${info.image}`)
+  if (info.outerGamerID) {
+    return localImg(`custom-images/outer-games/${info.image}`)
+  } else {
+    return getLotteryImage(info)
+  }
 }
 </script>
 
@@ -42,7 +53,7 @@ function getImage(info: Record<string, any>) {
     </div>
     <div class="game-span">
       <h4 class="text-overflow">
-        {{ game.outerGamerName }}
+        {{ game.outerGamerName || game.lottoName }}
       </h4>
     </div>
     <div class="list-games-shadow" />

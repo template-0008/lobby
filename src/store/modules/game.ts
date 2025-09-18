@@ -1,6 +1,7 @@
 import { outerGameHttp } from "@/01-kk-system/allHttp/userHall/games";
 import { GameGroupParams } from "@/01-kk-system/allHttp/userHall/model/gameModels";
 import { kkAuth } from "@/01-kk-system/allUtils/kkAuth";
+import { localImg } from "@/01-kk-system/allUtils/utils";
 import { getAllGroups, getValidOuterGameLine } from "@/01-kk-system/middleware/cacheHttp";
 import {
   GameLineTypes,
@@ -178,6 +179,7 @@ export const useGameStore = defineStore("game", () => {
         css: '',
         isHot: false,
         children: group.children,
+        icon: localImg('images/new/icon_hot.png'),
       }
     })
     allGroups.value = groupList

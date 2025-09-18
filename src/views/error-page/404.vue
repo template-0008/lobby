@@ -12,7 +12,7 @@ function message() {
 </script>
 
 <template>
-  <div class="wscn-http404-container">
+  <div class="wscn-http404-container bg-white p-4">
     <div class="wscn-http404">
       <div class="pic-404">
         <img class="pic-404__parent" src="@/assets/images/404.png" alt="404" />

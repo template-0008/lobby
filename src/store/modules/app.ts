@@ -1,6 +1,6 @@
 import { getLanguage } from "@/i18n";
 import { importOneComponentLanguage } from "@/utils/i18n";
-import { CURRENT_LANGUAGE } from "@/01-kk-system/allDefine/common/const";
+import { CURRENT_LANGUAGE, HEADER_KEEP_MENU_NAME } from "@/01-kk-system/allDefine/common/const";
 import en from "element-plus/es/locale/lang/en";
 import { store } from "@/store";
 import { SidebarStatusEnum } from "@/enums/SidebarStatusEnum";
@@ -21,16 +21,15 @@ const getAllUILibLanguage = () => {
 export const useAppStore = defineStore("app", () => {
   // state
   const language = useStorage(CURRENT_LANGUAGE, getLanguage());
-  const sidebarStatus = useStorage("sidebarStatus", SidebarStatusEnum.CLOSED);
+  const sidebarStatus = ref(true);
   const logo = ref("");
   const favicon = ref("");
   const banners = ref<string[]>([]);
   const platDiffConfig = ref<IObject>({});
+  const platformConfig = ref<IObject>({});
+  const showNoticeModal = ref(false)
+  const headerKeepMenuName = useStorage(HEADER_KEEP_MENU_NAME, ['UserAccount', 'UserBill', 'UserRreport']);
 
-  const sidebar = reactive({
-    opened: sidebarStatus.value === SidebarStatusEnum.OPENED,
-    withoutAnimation: false,
-  });
   // const activeTopMenuPath = useStorage("activeTopMenuPath", "");
   /**
    * 根据语言标识读取对应的语言包 get ui lib language messages by current lang
@@ -44,10 +43,7 @@ export const useAppStore = defineStore("app", () => {
 
   // actions
   function toggleSidebar() {
-    sidebar.opened = !sidebar.opened;
-    sidebarStatus.value = sidebar.opened
-      ? SidebarStatusEnum.OPENED
-      : SidebarStatusEnum.CLOSED;
+    sidebarStatus.value = !sidebarStatus.value
   }
 
   /**
@@ -85,7 +81,7 @@ export const useAppStore = defineStore("app", () => {
    *  @pramas code = ['3', '4', '5', '6', '7']
    */
   async function getAppBanners(isLocal: boolean = false) {
-    if (isLocal || window.location?.origin?.includes('kk-template')) {
+    if (isLocal || window.location?.origin?.includes('kk-template') || window.location?.origin?.includes('localhost')) {
       return [
         localImg(`custom-images/banner/banner01.png`),
         localImg(`custom-images/banner/banner02.png`),
@@ -136,8 +132,31 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
+  async function getPlatformConfig() {
+    try {
+      if (Object.keys(platformConfig.value).length > 0) {
+        return platformConfig.value
+      }
+      const res = await platformHttp.getConfig().catch(() => null)
+      const { data = {} } = res || {}
+      platformConfig.value = data
+      return platformConfig.value
+    } catch (error) {
+      console.error('get platform config error:', error);
+      return {}
+    }
+  }
+
+  function toggleNoticeModal(state: boolean) {
+    showNoticeModal.value = state
+  }
+
+  function setHeaderKeepMenuName(newNames: string[]) {
+    headerKeepMenuName.value = newNames
+  }
+
   return {
-    sidebar,
+    sidebarStatus,
     language,
     locale,
     logo,
@@ -146,6 +165,11 @@ export const useAppStore = defineStore("app", () => {
     getAppLogoByCode,
     getAppBanners,
     getDiffConfig,
+    getPlatformConfig,
+    showNoticeModal,
+    toggleNoticeModal,
+    headerKeepMenuName,
+    setHeaderKeepMenuName,
   };
 });
 

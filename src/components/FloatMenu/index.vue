@@ -1,42 +1,82 @@
 <template>
-  <div class="float-bg z-100 menu-float fixed right-0 py-3 overflow-hidden top-140px w-100px rounded-l-2" :style="{ width: isClose ? '0' : '100px' }">
-    <div class="px-2 flex flex-col items-center justify-center gap-4 text-12px">
-      <ThemeSwitch />
-      <div class="float-item h-70px w-70px rounded-2 flex-center flex-col cursor-pointer" @click="openService">
-        <div class="i-carbon:user-feedback w-7 h-7"></div>
-        <span>{{ $t("web.i18nFront.label.server")  }}</span>
-      </div>
-      <div class="float-item h-70px w-70px rounded-2 flex-center flex-col cursor-pointer" @click="goNotice">
-        <div class="i-carbon:notification-new w-7 h-7"></div>
-        <span>{{ $t('web.i18nFront.label.platNoti2') }}</span>
-      </div>
-      <div class="float-item h-70px w-70px rounded-2 flex-center flex-col cursor-pointer" @click="backToTop">
-        <div class="i-carbon:upgrade w-7 h-7"></div>
-        <span>{{ $t('web.i18nFront.label.backToTop') }}</span>
-      </div>
+  <div class="fixed right-0 top-118px z-100 overflow-hidden">
+    <div class="w-70px bg-white rounded-8px">
+      <ul class="w-full h-[315px] flex flex-col overflow-hidden transition-all duration-300 ease-in-out" :class="{ 'h-63px': isFold }">
+        <transition name="kk-fold">
+          <div v-if="!isFold">
+            <li class="float-item-wrapper kk-item-b" @click="openService">
+              <div class="fix-menu-item kk-item-01"></div>
+              <span>{{ $t("web.i18nFront.label.server") }}</span>
+            </li>
+            <li class="float-item-wrapper kk-item-b" @click="goDownload">
+              <div class="fix-menu-item kk-item-02"></div>
+              <span>{{ $t("web.i18nFront.label.download") }}</span>
+            </li>
+            <li class="float-item-wrapper kk-item-b" @click="goNotice">
+              <div class="fix-menu-item2"></div>
+              <span>{{ $t("web.i18nFront.label.platNoti2") }}</span>
+            </li>
+            <li class="float-item-wrapper kk-item-b">
+              <SwitchLanguage />
+            </li>
+          </div>
+        </transition>
+        <li class="float-item-wrapper" @click="onClickFold">
+          <div class="fix-menu-item kk-item-03"></div>
+          <span>{{ $t("web.i18nFront.label.fold") }}</span>
+        </li>
+      </ul>
     </div>
-  </div>
-
-  <div class="float-bg fixed right-0 top-500px h-50px small-float flex-center rounded-l-2 py-4 cursor-pointer" :style="{ width: isClose ? '50px' : '100px' }" @click="onClickFloat">
-    <el-icon class="transition" :class="{'rotate-180	': isClose }" size="30"><DArrowRight /></el-icon>
+    <CustomModal v-model="showDownloadModal" :title="$t('web.i18nFront.label.download')" width="960px" :show-close="false" :show-ok="false">
+      <div class="py-5 flex-center">
+        <div class="flex-center gap-6 group">
+          <div class="h-260px">
+            <img class="h-full object-contain group-hover:scale-115 transition-all" src="@/assets/images/dropmenu/app-img.png" alt="">
+          </div>
+          <div class="flex flex-col items-center gap-3">
+            <p class="font-500 text-20px color-#303442">{{ $t("web.i18nFront.label.mobile") }}</p>
+            <div class="p-4 bg-[#eef2fe] rounded-2 border-1 border-white">
+              <img class="w-120px h-120px" :src="qrcode" alt="APP QR Code" />
+            </div>
+            <p>{{ $t("web.i18nFront.desc.appDownload") }}</p>
+          </div>
+        </div>
+      </div>
+    </CustomModal>
   </div>
 </template>
 
 <script setup lang="ts">
+import { getMobileHref } from '@/01-kk-system/allUtils/utils';
+import { useAppStore } from '@/store';
 import { useChatStore } from '@/store/modules/chat';
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 const router = useRouter()
 
 const chatStore = useChatStore();
+const appStore = useAppStore();
 
-const isClose = ref(false)
-const onClickFloat = () => {
-  isClose.value = !isClose.value
-}
+const showDownloadModal = ref(false)
+const isFold = ref(false)
 
 const backToTop = () => {
   const el = document.querySelector('.app-main')
   el?.scrollTo({ top: 0, behavior:'smooth' })
+}
+
+// 二维码
+const qrcodeTxt = shallowRef('')
+// @ts-ignore
+const qrcode = useQRCode(qrcodeTxt)
+
+function getH5Url() {
+  qrcodeTxt.value = getMobileHref(true)
+}
+
+function goDownload() {
+  getH5Url()
+  showDownloadModal.value = true
 }
 
 function openService() {
@@ -44,44 +84,57 @@ function openService() {
 }
 
 function goNotice() {
-  router.push({ path: '/personal/announcement' })
+  appStore.toggleNoticeModal(true);
+}
+
+function onClickFold() {
+  isFold.value = !isFold.value
 }
 
 </script>
 
 <style scoped>
-.menu-float {
-  transition: all 0.5s;
-  transform-origin: left top;
+.float-item-wrapper {
+  @apply w-full h-63px flex-center flex-col cursor-pointer;
 }
-.small-float {
-  transition: all 0.5s;
+.kk-item-b {
+  @apply border-b border-gray-200;
 }
-
-.float-bg {
-  background-color: hsla(0, 0%, 100%, 0.8);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+.fix-menu-item {
+  width: 100%;
+  height: 100%;
+  background: url(@/assets/images/new/sprite-icons.png) no-repeat center center;
+  background-repeat: no-repeat;
+  height: 21px;
+  margin: 0 auto 5px;
+  position: relative;
+  width: 22px;
 }
-.float-item {
-  background: hsla(0, 0%, 100%, .8);
-  box-shadow: inset 0 3px 3px 0 hsla(0, 0%, 100%, .11), inset 0 -3px 3px 0 rgba(0, 0, 0, .1), 0 2px 4px 0 rgba(0, 0, 0, .3);
-  border: none;
-  color: #273569;
-  transition: all 0.5s;
+.fix-menu-item2 {
+  width: 100%;
+  height: 100%;
+  background: url(@/assets/images/new/notice2-icon.png) no-repeat center center;
+  background-repeat: no-repeat;
+  height: 21px;
+  margin: 0 auto 5px;
+  position: relative;
+  width: 22px;
 }
-.float-item:hover,
-html.dark .float-item:hover {
-  background-image: linear-gradient(137deg, #a98fff 1%, #597ef7 99%);
-  color: #fff;
+.kk-item-01 {
+  background-position: 0 -67px;
 }
-html.dark .float-bg {
-  background-color: rgba(0, 0, 0, 0.4);
+.kk-item-02 {
+  background-position: 0 -132px;
 }
-html.dark .float-item {
-  background: rgba(60, 62, 66, .9);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3), inset 0 3px 3px 0 hsla(0, 0%, 100%, .11), 0 2px 4px 0 rgba(0, 0, 0, .3);
-  border: none;
-  color: #fff;
-  transition: all 0.5s;
+.kk-item-03 {
+  background-position: 0 -258px;
+}
+.kk-fold-enter-active,
+.kk-fold-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.kk-fold-enter-from,
+.kk-fold-leave-to {
+  transform: translateY(-100%);
 }
 </style>

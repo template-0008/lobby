@@ -1,25 +1,40 @@
 <template>
-  <div class="wh-full overflow-hidden">
+  <div class="wh-full overflow-hidden relative">
     <NavBar />
     <!-- body -->
-    <div class="relative w-full h-full flex app-body">
-      <!-- <div class="sidebar-box" v-show="isOpenSidebar">
-        <Sidebar v-show="isOpenSidebar" class="sidebar-container" />
-      </div> -->
+    <div class="app-main">
       <AppMain />
     </div>
+    <FloatMenu />
+    <CustomModal v-model="showNoticeModal" destroy-on-close :title="$t('web.i18nFront.label.platNoti')" width="960px" :show-close="false" :show-ok="false">
+      <PlatformNotice />
+    </CustomModal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from "@/store";
+import CustomModal from "@/components/CustomModal/index.vue";
+import PlatformNotice from "@/components/PlatformNotice/index.vue";
 
 const appStore = useAppStore();
 
-const isOpenSidebar = computed(() => appStore.sidebar.opened);
+const showNoticeModal = computed({
+  get: () => appStore.showNoticeModal,
+  set: (value) => appStore.toggleNoticeModal(value),
+})
+
 </script>
 
 <style lang="scss" scoped>
+.app-main {
+  position: relative;
+  width: 100%;
+  height: calc(100% - $navbar-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  // background-color: #f3faff;
+}
 .sidebar-box {
   flex-shrink: 0;
   width: $sidebar-width;

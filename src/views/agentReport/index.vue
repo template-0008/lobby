@@ -15,7 +15,7 @@ const activeName = ref("teamManage");
 </script>
 
 <template>
-  <div class="app-container m-5">
+  <div class="app-container m-5 bg-white p-4">
     <el-tabs v-model="activeName" class="top-tabs">
       <el-tab-pane
         :label="$t('web.i18nFront.label.teamM')"

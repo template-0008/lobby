@@ -1,7 +1,6 @@
 <template>
   <el-config-provider :locale="locale">
     <router-view />
-    <Login v-model="showLogin" />
   </el-config-provider>
 </template>
 
@@ -12,14 +11,9 @@ import useAutoThemeSwitcher from "./hooks/useAutoThemeSwitcher";
 import { transOut2System } from "./04-kk-component-admin/components/hooks/commonUtil";
 import { PlatformImageCode } from "./01-kk-system/allHttp/models/common";
 
-const showLogin = ref(true);
 const userStore = useUserStore();
 const chartStore = useChatStore();
 const gameStore = useGameStore();
-
-watchEffect(() => {
-  showLogin.value = userStore.showLogin;
-});
 
 const appStore = useAppStore();
 const designStore = useDesignSettingStore()

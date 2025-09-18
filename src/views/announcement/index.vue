@@ -11,6 +11,7 @@ const list = ref<IObject>([]);
 const loading = ref(false);
 const showDetail = ref(false);
 const DetailData = ref<IObject>();
+const initPressID = ref("");
 
 async function getNoticeList() {
   loading.value = true;
@@ -20,6 +21,10 @@ async function getNoticeList() {
     list.value = data || [];
   }
   loading.value = false;
+  if (initPressID.value) {
+    const target = list.value.find((item: { pressID: string; }) => item.pressID === initPressID.value);
+    target && onClickRow(target);
+  }
 }
 
 function onClickRow(item: Record<string, any>) {
@@ -30,11 +35,12 @@ function onClickRow(item: Record<string, any>) {
 
 onBeforeMount(() => {
   getNoticeList();
+  initPressID.value = useRoute().query?.pressID as string;
 });
 </script>
 
 <template>
-  <div class="app-container h-full m-5">
+  <div class="app-container h-full m-5 bg-white p-4">
     <el-tabs v-model="activeName" class="top-tabs h-full">
       <el-tab-pane
         class="min-h-660px"

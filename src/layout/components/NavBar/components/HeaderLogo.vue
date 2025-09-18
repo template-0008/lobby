@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-2 shrink-0 min-w-200px mr-4">
+  <div class="flex gap-2 shrink-0 w-230px mr-4">
     <a class="flex-center" href="javascript:void(0)" @click="goHome">
-      <img class="h-[46px] object-contain" v-if="logo" :src="logo" alt="" />
+      <img class="w-full object-contain" v-if="logo" :src="logo" alt="" />
     </a>
   </div>
 </template>
@@ -15,10 +15,6 @@ const router = useRouter();
 const appStore = useAppStore();
 
 const logo = ref("");
-
-const animatStyle = computed(() => ({
-  transform: appStore.sidebar.opened ? "rotateZ(0deg)" : "rotateZ(180deg)",
-}));
 
 function toggleSideBar() {
   appStore.toggleSidebar();

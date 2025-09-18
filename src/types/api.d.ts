@@ -20,4 +20,5 @@ export interface TopMenuType {
   css: string;
   isHot: boolean;
   children: any[];
+  icon?: string;
 }

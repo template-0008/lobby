@@ -227,7 +227,7 @@ async function checkRealName() {
       :real-name="realName"
       @refresh="checkRealName"
     />
-    <ComfirmModal v-model="showConfirm" />
+    <!-- <ComfirmModal v-model="showConfirm" /> -->
     <FundPwd
       v-model="showFundPwd"
       :has-fund-pwd="hasFundPwd"

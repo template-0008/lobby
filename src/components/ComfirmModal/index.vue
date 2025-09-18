@@ -1,29 +1,31 @@
 <script setup lang="ts">
-import { userHttp } from "@/01-kk-system/allHttp/userHall/user";
-import { IObject } from "@/components/CURD/types";
-import { translateTextBy } from "@/utils/i18n";
-import { FormInstance, FormRules } from "element-plus";
 
 defineOptions({
   name: "ResetLoginPwdModal",
 });
-defineProps({
-  title: String,
-  text: String,
+withDefaults(defineProps<{
+  title: string,
+  text: string,
+  showClose?: boolean,
+  showOk?: boolean,
+}>(), {
+  showClose: true,
+  showOk: true,
 });
 const modalVisible = defineModel({ required: true, default: false });
 
 const emit = defineEmits<{
-  onConfirm: [void];
+  onOk: [void];
   onClose: [void];
 }>();
 
-function handleCloseModal() {
+function onClose() {
   modalVisible.value = false;
   emit("onClose");
 }
 function onSubmit() {
-  emit("onClose");
+  modalVisible.value = false;
+  emit("onOk");
 }
 </script>
 
@@ -34,29 +36,39 @@ function onSubmit() {
     :close-on-click-modal="false"
     :show-close="false"
     :append-to-body="true"
-    :title="title || $t('system.i18nSystem.label.tipTitle')"
-    width="540px"
-    style="padding-right: 0"
-    @close="handleCloseModal"
+    width="360px"
+    style="padding: 0; --el-dialog-border-radius: 10px;"
+    @close="onClose"
   >
-    <slot>
-      <h2 class="py-5 text-center color-[var(--kk-modal-title)] text-14px">
-        {{ text }}
-      </h2>
-    </slot>
-    <div class="mt-12 mb-5 flex-center">
-      <el-button
-        @click="onSubmit"
-        size="large"
-        style="
-          --el-button-hover-text-color: #ffffff;
-          color: var(--kk-modal-button-title-color);
-        "
-        class="w-300px border-none linear-bg "
-        >{{ $t("system.i18nSystem.opration.confirm") }}</el-button
-      >
+    <div class="bg-white -mt-10">
+      <div class="flex flex-col items-center">
+        <img src="@/assets/images/new/alert-icon.png" class="w-162px h-156px" alt="">
+        <h2 class="py-5 text-center color-black text-20px">
+          {{ title ?? $t("system.i18nSystem.label.tipTitle") }}
+        </h2>
+        <p class="text-center color-black text-14px pb-5">
+          {{ text  ?? $t("system.i18nSystem.hint.confirmAct") }}
+        </p>
+      </div>
+    </div>
+    <div class="pt-10 pb-5 border-t border-#dfe0e2 flex-center gap-5">
+      <div class="h-7 min-w-90px bg-#e77e4f rounded-full flex-center cursor-pointer hover:bg-gradient-to-r hover:from-#ff942c hover:to-#ff6920" @click="onSubmit">
+        <span class="text-14px text-white select-none">
+          {{ $t("system.i18nSystem.opration.confirm") }}
+        </span>
+      </div>
+
+      <div class="h-7 min-w-90px bg-#f5f5f5 rounded-full flex-center cursor-pointer border border-#eee hover:bg-#eee" @click="onClose">
+        <span class="text-14px text-black select-none">
+          {{ $t("system.i18nSystem.opration.cancel") }}
+        </span>
+      </div>
     </div>
   </el-dialog>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.el-dialog__header) {
+  height: 0;
+}
+</style>

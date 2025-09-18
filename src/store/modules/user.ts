@@ -28,6 +28,8 @@ export const useUserStore = defineStore("user", () => {
   const avalableFlatWallets = ref<Record<string, any>[]>([]);
   const myContractSalary = ref<Record<string, any>[]>([]);
 
+  const router = useRouter();
+
   function setLoginModalState(state: boolean) {
     showLogin.value = state;
   }
@@ -103,6 +105,7 @@ export const useUserStore = defineStore("user", () => {
       currentWalletInfo.value.walletType = currentWalletType;
       currentWalletInfo.value.currencyCode = currentCurrencyCode;
       kkAuth.setUserInfo(data);
+      await getUserBanlance();
     }
   }
 
@@ -120,6 +123,7 @@ export const useUserStore = defineStore("user", () => {
     userInfo.value = {};
     kkAuth.clearToken();
     kkAuth.clearUserInfo();
+    router.replace("/login");
   }
   // 获取钱包和币种列表
   async function fetchWallets() {

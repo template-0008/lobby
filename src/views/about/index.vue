@@ -14,7 +14,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 </script>
 
 <template>
-  <div class="bg-[var(--cp-color141)] rounded-1 my-4 py-4 px-5 w-1400px mx-auto">
+  <div class="bg-white px-4 rounded-1 my-4 py-4 px-5 w-1400px mx-auto">
     <el-tabs v-model="activeName" class="top-tabs" @tab-click="handleClick">
       <el-tab-pane
         :label="$t('web.i18nFront.label.aboutUs')"

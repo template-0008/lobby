@@ -20,7 +20,7 @@ function goTo(path: string) {
 <template>
   <footer class="bg-[#303442]">
     <div class="min-h-200px mx-auto w-1200px pt-5 color-[var(--kk-footer-text-color)]">
-       <div class="logo-container relative w-full flex justify-center items-center pb-5">
+      <div class="logo-container relative w-full flex justify-center items-center pb-5">
         <div class="w-93px h-50px cursor-pointer transition-all group">
           <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-ag.png" alt="">
           <img class="h-full hidden group-hover:block" src="@/assets/images/home/icon-ag-a.png" alt="">
@@ -28,14 +28,6 @@ function goTo(path: string) {
         <div class="w-65px h-50px cursor-pointer transition-all group">
           <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-yoo.png" alt="">
           <img class="h-full hidden group-hover:block" src="@/assets/images/home/icon-yoo-a.png" alt="">
-        </div>
-        <div class="w-93px h-50px cursor-pointer transition-all group">
-          <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-im.png" alt="">
-          <img class="h-full hidden group-hover:block" src="@/assets/images/home/icon-im-a.png" alt="">
-        </div>
-        <div class="w-100px h-50px cursor-pointer transition-all group">
-          <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-xm.png" alt="">
-          <img class="h-full hidden group-hover:block" src="@/assets/images/home/icon-xm-a.png" alt="">
         </div>
         <div class="w-108px h-50px cursor-pointer transition-all group">
           <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-win.png" alt="">
@@ -49,7 +41,7 @@ function goTo(path: string) {
           <img class="h-full block group-hover:hidden" src="@/assets/images/home/icon-bg.png" alt="">
           <img class="h-full hidden group-hover:block" src="@/assets/images/home/icon-bg-a.png" alt="">
         </div>
-       </div>
+      </div>
       <ul class="footer-menu flex-center py-4">
         <li class="footer-menu-item" @click="goTo('aboutUs')">
           <a>{{ $t("web.i18nFront.label.aboutUs") }}</a>

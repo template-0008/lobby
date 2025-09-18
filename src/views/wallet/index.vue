@@ -16,7 +16,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 </script>
 
 <template>
-  <div class="app-container m-5">
+  <div class="app-container m-5 bg-white p-4">
     <el-tabs v-model="activeName" class="top-tabs" @tab-click="handleClick">
       <!-- <el-tab-pane :label="$t('web.i18nFront.label.recharge')" name="recharge">
         <el-empty />

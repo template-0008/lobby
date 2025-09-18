@@ -25,6 +25,11 @@ export const constantRoutes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: "/login",
+    meta: { hidden: true },
+    component: () => import("@/views/login/index.vue"),
+  },
+  {
     path: "/",
     name: "root",
     component: Layout,
@@ -38,6 +43,7 @@ export const constantRoutes: RouteRecordRaw[] = [
           title: "system.i18nSystem.label.dashboard",
           icon: "homepage",
           affix: true,
+          needLogin: true,
           keepAlive: true,
           alwaysShow: false,
         },
@@ -176,7 +182,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   {
     path: "/personal",
-    component: Layout2,
+    component: Layout,
     redirect: "/personal/account",
     meta: {
       title: `个人`,
@@ -270,7 +276,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   {
     path: "/agent",
-    component: Layout2,
+    component: Layout,
     redirect: "/agent/account/open",
     meta: {
       title: `代理`,

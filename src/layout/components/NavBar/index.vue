@@ -3,154 +3,10 @@
     <div class="nav-bar-bg"></div>
     <div class="nav-top relative z-2">
       <div class="nav-top-c">
-        <!-- 导航栏左侧 -->
-        <NavbarLeft />
-        <!-- 导航栏右侧 -->
-        <NavbarRight />
+        <HeaderLogo />
+        <NavbarContent />
       </div>
     </div>
-    <!-- lottery -->
-    <ul class="drop-content kk-lottery-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="lotteryGames?.length > 0">
-          <CustomSwiper :gameList="lotteryGames" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickClassiGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- Sports -->
-    <ul class="drop-content kk-sports-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="sportsList?.length > 0">
-          <CustomSwiper :gameList="sportsList" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickOuterGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- Realbet -->
-    <ul class="drop-content kk-realbet-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="realBetList?.length > 0">
-          <CustomSwiper :gameList="realBetList" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickOuterGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- Chess -->
-    <ul class="drop-content kk-chess-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="chessList?.length > 0">
-          <CustomSwiper :gameList="chessList" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickOuterGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- Fish -->
-    <ul class="drop-content kk-fish-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="fishList?.length > 0">
-          <CustomSwiper :gameList="fishList" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickOuterGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- EGame -->
-    <ul class="drop-content kk-egame-dropdown-menu">
-      <li class="max-w-1400px mx-auto drop-menu">
-        <template v-if="egameList?.length > 0">
-          <CustomSwiper :gameList="egameList" v-slot="{ item, index }">
-            <DropMenuItem
-              :item="item"
-              :icon="item.icon"
-              :image="item.image"
-              :title="item.title"
-              :subTitle="item.subTitle"
-              @onClickGame="onClickOuterGame"
-            />
-          </CustomSwiper>
-        </template>
-        <div v-else class="w-full flex-center">
-          <el-empty />
-        </div>
-      </li>
-    </ul>
-    <!-- actvity -->
-    <ul class="drop-content drop-menu kk-actvity-dropdown-menu">
-      <div class="w-full flex-center">
-        <el-empty />
-      </div>
-    </ul>
-    <ul class="drop-content drop-menu kk-app-d-dropdown-menu">
-      <div class="w-full flex-center">
-        <div class="flex-center gap-6 group">
-          <div class="h-260px">
-            <img class="h-full object-contain group-hover:scale-115 transition-all" src="@/assets/images/dropmenu/app-img.png" alt="">
-          </div>
-          <div class="flex flex-col items-center gap-3">
-            <p class="font-500 text-20px color-#303442">{{ $t("web.i18nFront.label.mobile") }}</p>
-            <div class="p-4 bg-[#eef2fe] rounded-2 border-1 border-white">
-              <img class="w-120px h-120px" :src="qrcode" alt="APP QR Code" />
-            </div>
-            <p>{{ $t("web.i18nFront.desc.appDownload") }}</p>
-          </div>
-        </div>
-      </div>
-    </ul>
   </div>
   <div class="empty-header"></div>
 </template>
@@ -162,6 +18,8 @@ import useGameLocalImage from "@/hooks/useGameLocalImage";
 import useLinkOpenFunc from '@/04-kk-component-admin/components/hooks/useLinkOpenFunc';
 import { useGameStore, useUserStore } from "@/store";
 import { useQRCode } from '@vueuse/integrations/useQRCode'
+import NavbarContent from './components/NavbarContent.vue'
+import HeaderLogo from './components/HeaderLogo.vue'
 
 const gameStore = useGameStore();
 const { getImage } = useGameLocalImage()
@@ -279,8 +137,10 @@ onBeforeMount(() => {
 
 .nav-bar-bg {
   @apply absolute top-0 bottom-0 left-0 right-0 z-0;
-  background: linear-gradient(180deg, #cddaf2 .2%, rgba(232, 238, 249, 0) 71.64%);
-  backdrop-filter: blur(8px);
+  // background: linear-gradient(180deg, #59090a .2%, rgba(232, 238, 249, 0) 71.64%);
+  // backdrop-filter: blur(8px);
+  background-color: #59090a;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
 }
 
 .empty-header {
@@ -291,10 +151,10 @@ onBeforeMount(() => {
 
 .nav-top {
   height: $navbar-top-height;
+  color: #ffffff;
 
   .nav-top-c {
-    @apply flex-x-between m-x-auto h-full;
-    width: $kk-content-width;
+    @apply flex-x-between m-x-auto h-full px-4;
   }
 }
 

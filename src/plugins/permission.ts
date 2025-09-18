@@ -18,7 +18,7 @@ export function setupPermission() {
     const hasToken = kkAuth.getToken();
     const needLogin = to.meta?.needLogin;
 
-    // console.log("---hasToken------", hasToken, to);
+    console.log("---hasToken------", hasToken, to);
     // if (needLogin && !hasToken) {
     //   next({ path: "/" });
     //   userStore.showLogin = true;
@@ -28,7 +28,7 @@ export function setupPermission() {
 
     if (hasToken) {
       if (to.path === "/login") {
-        next({ path: "/" });
+        next({ path: "/login" });
       } else {
         const userStore = useUserStore();
         const hasGetUserInfo = userStore.userInfo?.userID;
@@ -42,15 +42,15 @@ export function setupPermission() {
             userStore.resetToken();
             await userStore.getUserInfo();
             ElMessage.error(error || "Has Error");
-            next(`/`);
-            userStore.showLogin = true;
+            next(`/login`);
           }
         }
       }
     } else {
       if (needLogin) {
-        next('/');
-        userStore.showLogin = true;
+        const userStore = useUserStoreHook();
+        userStore.resetToken();
+        next('/login');
       } else {
         next();
       }
