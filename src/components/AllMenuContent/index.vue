@@ -67,15 +67,6 @@ const onClickMenu = (data: IObject) => {
 </script>
 
 <style scoped>
-.kk-menu-icon {
-  width: 18px;
-  height: 18px;
-  border: 1px solid #eee;
-}
-.kk-menu-icon.kk-active {
-  background: url('@/assets/images/new/menu-icon.png') no-repeat;
-  background-size: contain;
-}
 .kk-item-icon1 {
   background: url('@/assets/images/new/sprite-icons2.png') no-repeat;
   background-position: -102px -87px;
