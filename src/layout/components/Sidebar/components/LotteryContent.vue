@@ -45,12 +45,6 @@ const gameCollectionStore = useGameCollectionStore()
 const collectGameList = computed(() => gameCollectionStore.favoriteGames ?? [])
 const lotteryFavoriteIds = computed(() => gameCollectionStore.lotteryFavoriteIds ?? [])
 
-watch(collectGameList, (newVal) => {
-  console.log('newVal----', newVal)
-})
-watch(lotteryFavoriteIds, (newVal) => {
-  console.log('lotteryFavoriteIds----', newVal)
-})
 
 const gameStore = useGameStore();
 const { onClickClassiGame } = useLinkOpenFunc();
