@@ -43,7 +43,7 @@ const props = defineProps<{
 const gameCollectionStore = useGameCollectionStore()
 
 const collectGameList = computed(() => gameCollectionStore.favoriteGames ?? [])
-const lotteryFavoriteIds = computed(() => gameCollectionStore.lotteryFavoriteIds ?? [])
+const lotteryFavoriteIds = computed(() => props.isEdit ? gameCollectionStore.lotteryFavoriteIds ?? [] : [])
 
 
 const gameStore = useGameStore();

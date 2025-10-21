@@ -44,11 +44,21 @@
   <CustomModal
     v-model="showLotteryModal"
     width="960px"
-    :title="$t('web.i18nFront.label.addQuickMenu')"
+    :title="$t('web.i18nFront.title.lottery')"
     :show-close="false"
     :show-ok="false"
   >
     <LotteryContent :is-edit="isCollectModal" :collect-game-list="collectGameList" />
+  </CustomModal>
+  <CustomModal
+    v-model="showOtherGameModal"
+    width="960px"
+    destroy-on-close
+    :title="$t('web.i18nFront.label.otherGm')"
+    :show-close="false"
+    :show-ok="false"
+  >
+    <OtherGameContent :game-list="otherGameList" />
   </CustomModal>
   <CustomModal
     v-model="showHotGameModal"
@@ -80,6 +90,8 @@ const showHotGameModal = ref(false);
 const hotTitle = ref('');
 const hotGameList = ref<IObject[]>([]);
 const isCollectModal = ref(false);
+const showOtherGameModal = ref(false);
+const otherGameList = ref<IObject[]>([]);
 
 const gameCollectionStore = useGameCollectionStore()
 
@@ -130,7 +142,8 @@ const menus = computed(() => {
       title: t('web.i18nFront.title.egame'),
       id: 7,
       route: '/egame',
-      routeName: 'EGame',
+      routeName: 'egame',
+      routeType: 'outer',
       css: 'kk-egame',
       icon: localImg('images/new/icon_egame.png'),
       isHot: false,
@@ -140,7 +153,8 @@ const menus = computed(() => {
       title: t('web.i18nFront.title.fish'),
       id: 6,
       route: '/fish',
-      routeName: 'Fish',
+      routeName: 'fish',
+      routeType: 'outer',
       icon: localImg('images/new/icon_fishing.png'),
       css: 'kk-fish',
       isHot: false,
@@ -160,7 +174,8 @@ const menus = computed(() => {
       title: t('web.i18nFront.title.sports'),
       id: 3,
       route: '/sports',
-      routeName: 'Sports',
+      routeName: 'sports',
+      routeType: 'outer',
       icon: localImg('images/new/icon_sports.png'),
       isHot: false,
       css: 'kk-sports',
@@ -170,8 +185,9 @@ const menus = computed(() => {
       title: t('web.i18nFront.title.realbet'),
       id: 4,
       route: '/realbet',
-      routeName: 'Realbet',
+      routeName: 'realbet',
       css: 'kk-realbet',
+      routeType: 'outer',
       icon: localImg('images/new/icon_realbet.png'),
       isHot: false,
       children: null,
@@ -180,8 +196,9 @@ const menus = computed(() => {
       title: t('web.i18nFront.title.chess'),
       id: 5,
       route: '/chess',
-      routeName: 'Chess',
+      routeName: 'chess',
       css: 'kk-chess',
+      routeType: 'outer',
       icon: localImg('images/new/icon_chess.png'),
       isHot: false,
       children: null,
@@ -196,6 +213,24 @@ const handleClickGame = (menu: IObject) => {
     hotGameList.value = children
     hotTitle.value = menu.title
     showHotGameModal.value = true
+    return
+  }
+
+  if (menu.routeType === 'outer') {
+    showOtherGameModal.value = true
+
+    let tempList: IObject[] = []
+    for (let i = 0; i < menus.value.length; i++) {
+      const item = menus.value[i] as any
+      if (item?.routeType === 'outer') {
+        tempList.push({
+          title: item.title,
+          key: item.routeName,
+          children: [],
+        })
+      }
+    }
+    otherGameList.value = tempList
     return
   }
 
