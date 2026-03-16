@@ -1,6 +1,9 @@
 declare global {
   interface Window {
     isSimulatedClick: boolean;
+    Tawk_API: any;
+    Tawk_LoadStart: any;
+    jivo_api: any;
   }
   /**
    * 响应数据
@@ -86,4 +89,4 @@ declare global {
     userID: string;
   }
 }
-export {};
+export { };
