@@ -5,7 +5,7 @@ import { adminAccountStatus } from "@/01-kk-system/allDefine/enum/admin/account"
 defineOptions({
   name: "OperationDeatilModal",
 });
-const modalVisible = defineModel({ required: true });
+const modalVisible = defineModel<boolean>({ required: true });
 
 const props = defineProps<{ editData: IObject }>();
 
