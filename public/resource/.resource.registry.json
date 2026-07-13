@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "registry": "LOBBY",
+  "displayImages": [
+    { "name": "displayImage01.png", "size": "1280x600" },
+    { "name": "displayImage02.png", "size": "1280x600" },
+    { "name": "displayImage03.png", "size": "1280x600" }
+  ],
+  "config": {
+    "images": [
+      { "group": "carousel", "position": "1", "enable": "0", "size": "750x265", "formate":"png" },
+      { "group": "carousel", "position": "2", "enable": "0", "size": "750x265", "formate":"png"  }
+    ],
+    "texts": [
+      { "group": "home", "position": "1", "enable": "0", "characters": "12" },
+      { "group": "home", "position": "2", "enable": "0", "characters": "20" }
+    ]
+  },
+  "_comments": {
+    "version": "资源版本号。",
+    "registry": "资源注册中心标记",
+    "displayImages": "用于展现的图片资源。",
+    "config_images_group": "图片资源分组，可以自由起名，在管理后台会按分组展现信息。",
+    "config_images_position": "图片位置信息从1开始编号不能重复,不受group影响。",
+    "config_images_enable": "图片资源是否启用，1为启用，0为不启用。",
+    "config_images_size": "图片尺寸，配置时需要按照该尺寸上传图片。",
+    "config_images_formate": "图片格式，配置时需要按照该格式上传图片。",
+    "config_texts_group": "文字资源分组，可以自由起名，在管理后台会按分组展现信息。",
+    "config_texts_position": "文字位置信息从1开始编号不能重复,不受group影响。",
+    "config_texts_enable": "文字资源是否启用，1为启用，0为不启用。",
+    "config_texts_characters": "文字数量，不能大于该数量。"
+  },
+  "_options": {
+    "registry": ["ADMIN", "LOBBY", "LOBBY_MOBILE", "LOTTO_SELLER", "LOTTO_SELLER_MOBILE", "LOTTO_SELLER_TG", "PAYMENT", "PAYMENT_MOBILE", "SPEED_TEST", "USER_ENROLL"],
+    "config_images_group": ["carousel"],
+    "config_texts_group":  ["home"]
+  }
+}
